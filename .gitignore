@@ -1,0 +1,16 @@
+# Unit testing files
+src/InvalidArgumentException.java
+src/JsonReader.java
+src/Tester.java
+
+# Save data folders
+San_Francisco/
+
+# Java class files
+*.class
+
+# Generated files
+bin/
+
+# Eclipse settings
+.settings/
