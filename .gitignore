@@ -12,5 +12,7 @@ San_Francisco/
 # Generated files
 bin/
 
-# Eclipse settings
+# Eclipse specific settings/files 
 .settings/
+.project
+.classpath
