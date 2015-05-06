@@ -45,7 +45,7 @@ public class WeatherTracker {
 			throw new IllegalArgumentException("City, State, and Date must be provided when using historical look-up");
 		} 
 		else {
-			JsonNode json = new WundergroundData(apiKey).fetchHistorical(city, state, date); //.path("history").path("dailysummary");
+			JsonNode json = new WundergroundData(apiKey).fetchHistorical(city, state, date);
 
 			if (validData(json)) {
 				//Files and full path will be saved in the format of ${cwd}/${city}/${date}.json
