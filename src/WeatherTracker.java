@@ -49,7 +49,7 @@ public class WeatherTracker {
 	
     public static boolean fetchHistoricalData(String apiKey, String city, String state, String date, String savePath) 
             throws MalformedURLException, IOException {
-		// Do not attempt to get historical data unless all parameters have been passed
+        // Do not attempt to get historical data unless all parameters have been passed
         if (city == null || state == null || date == null) {
             throw new IllegalArgumentException("City, State, and Date must be provided when requesting historical data");
         } 
@@ -61,7 +61,7 @@ public class WeatherTracker {
             return false;
         }
 		
-	    //Files and full path will be saved in the format of ${savePath}/${city}/${date}.json
+        // Files and full path will be saved in the format of ${savePath}/${city}/${date}.json
         String dirPath = String.format("%s/%s", savePath, city);
         String fileName = String.format("%s.json", date);
         
@@ -79,7 +79,7 @@ public class WeatherTracker {
         String apiKey   = null;
         String savePath = System.getProperty("user.dir");
 	    
-	    //Initialize and set up CLI help options
+        //Initialize and set up CLI help options
         Options options = new Options();
         options.addOption("f", "feature", true , "Feature requested");
         options.addOption("p", "path"   , true , "Location to save file (defaults to current working directory)");
