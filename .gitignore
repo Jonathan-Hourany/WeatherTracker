@@ -6,13 +6,14 @@ src/Tester.java
 # Save data folders
 San_Francisco/
 
-# Java class files
-*.class
-
-# Generated files
-bin/
+# Depreciated/Unit Testing class files
+/bin/JsonReader.class
+/bin/Tester.class
 
 # Eclipse specific settings/files 
 .settings/
 .project
 .classpath
+
+# Swap files
+*.swp
