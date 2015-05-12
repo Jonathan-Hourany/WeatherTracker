@@ -42,88 +42,88 @@ public class WeatherTracker {
             } 
         }
 		
-	    File file = new File(dirPath, fileName);
-	    new ObjectMapper().writeValue(file, node);
-	    System.out.println("File created at: " + file);
+        File file = new File(dirPath, fileName);
+        new ObjectMapper().writeValue(file, node);
+        System.out.println("File created at: " + file);
     }
 	
     public static boolean fetchHistoricalData(String apiKey, String city, String state, String date, String savePath) 
             throws MalformedURLException, IOException {
 		// Do not attempt to get historical data unless all parameters have been passed
-	    if (city == null || state == null || date == null) {
-	        throw new IllegalArgumentException("City, State, and Date must be provided when requesting historical data");
-	    } 
+        if (city == null || state == null || date == null) {
+            throw new IllegalArgumentException("City, State, and Date must be provided when requesting historical data");
+        } 
 		
-	    JsonNode json = new WundergroundData(apiKey).fetchHistorical(city, state, date);
+        JsonNode json = new WundergroundData(apiKey).fetchHistorical(city, state, date);
 
-	    if (!validData(json)) {
-	        System.out.println(json.get(RESPONSE).get(ERROR));
-	        return false;
-	    }
+        if (!validData(json)) {
+            System.out.println(json.get(RESPONSE).get(ERROR));
+            return false;
+        }
 		
 	    //Files and full path will be saved in the format of ${savePath}/${city}/${date}.json
-	    String dirPath = String.format("%s/%s", savePath, city);
-	    String fileName = String.format("%s.json", date);
+        String dirPath = String.format("%s/%s", savePath, city);
+        String fileName = String.format("%s.json", date);
         
-	    saveDataAsFile(json.path(HISTORY), dirPath, fileName);
+        saveDataAsFile(json.path(HISTORY), dirPath, fileName);
         
-	    return true;
-	}
+        return true;
+    }
 	
     public static void main(String args[]) throws IOException, ParseException {
 		
-	    String feature  = null;
-	    String city     = null;
-	    String state    = null;
-	    String date     = null;
-	    String apiKey   = null;
-	    String savePath = System.getProperty("user.dir");
+        String feature  = null;
+        String city     = null;
+        String state    = null;
+        String date     = null;
+        String apiKey   = null;
+        String savePath = System.getProperty("user.dir");
 	    
 	    //Initialize and set up CLI help options
-	    Options options = new Options();
-	    options.addOption("f", "feature", true , "Feature requested");
-	    options.addOption("p", "path"   , true , "Location to save file (defaults to current working directory)");
-	    options.addOption("c", "city"	, true , "City requested");
-	    options.addOption("s", "state"	, true , "");
-	    options.addOption("d", "date"	, true , "Format as YYYMMDD. Date of look-up when doing a historical query");
-	    options.addOption("k", "key"	, true , "Wunderground API Key");
-	    options.addOption("h", "help"	, false, "Show help");
+        Options options = new Options();
+        options.addOption("f", "feature", true , "Feature requested");
+        options.addOption("p", "path"   , true , "Location to save file (defaults to current working directory)");
+        options.addOption("c", "city"	, true , "City requested");
+        options.addOption("s", "state"	, true , "");
+        options.addOption("d", "date"	, true , "Format as YYYMMDD. Date of look-up when doing a historical query");
+        options.addOption("k", "key"	, true , "Wunderground API Key");
+        options.addOption("h", "help"	, false, "Show help");
 	    
-	    //Initialize CLI Parsers
-	    CommandLineParser parser = new BasicParser();
+        //Initialize CLI Parsers
+        CommandLineParser parser = new BasicParser();
 	    
-	    // Parse CLI input
-	    CommandLine cmd = parser.parse(options, args);
-	    
-	    // Set CLI input to variables
-	    if (cmd.hasOption("f")) { 
-	        feature = cmd.getOptionValue("f");
-	    }
-	    if (cmd.hasOption("p")) {
-	        savePath = cmd.getOptionValue("p") ;
-	    }
-	    if (cmd.hasOption("c")) { 
-	        city = cmd.getOptionValue("c");
-	    }
-	    if (cmd.hasOption("s")) { 
-	        state = cmd.getOptionValue("s");
-	    }
-	    if (cmd.hasOption("d")) { 
-	        date = cmd.getOptionValue("d");
-	    }
-	    if (cmd.hasOption("k")) { 
-	        apiKey = cmd.getOptionValue("k");
-	    }
-		
-	    // Main entry point
-	    if (cmd.hasOption("h") || args.length == 0) {
-	        new HelpFormatter().printHelp(USAGE_MSG, options);
-	    }
-	    else if ("history".equals(feature) && apiKey != null) {
-	        fetchHistoricalData(apiKey, city, state, date, savePath); 
-	    }
-	    else {
-	        System.out.println(INVALID_OPTION);
-	    }
+        // Parse CLI input
+        CommandLine cmd = parser.parse(options, args);
+        
+        // Set CLI input to variables
+        if (cmd.hasOption("f")) { 
+            feature = cmd.getOptionValue("f");
+        }
+        if (cmd.hasOption("p")) {
+            savePath = cmd.getOptionValue("p") ;
+        }
+        if (cmd.hasOption("c")) { 
+            city = cmd.getOptionValue("c");
+        }
+        if (cmd.hasOption("s")) { 
+            state = cmd.getOptionValue("s");
+        }
+        if (cmd.hasOption("d")) { 
+            date = cmd.getOptionValue("d");
+        }
+        if (cmd.hasOption("k")) { 
+            apiKey = cmd.getOptionValue("k");
+        }
+        
+        // Main entry point
+        if (cmd.hasOption("h") || args.length == 0) {
+            new HelpFormatter().printHelp(USAGE_MSG, options);
+        }
+        else if ("history".equals(feature) && apiKey != null) {
+            fetchHistoricalData(apiKey, city, state, date, savePath); 
+        }
+        else {
+            System.out.println(INVALID_OPTION);
+        }
     }
 }
